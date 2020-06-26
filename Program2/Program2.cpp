@@ -25,13 +25,16 @@
 
 // Self-defined headers
 #include "utility.hpp"
+#include "Program2.hpp"
 
 void displayMFTProperties(const NTFSVBR &vbr) {
     // Find start address of $MFT
-    std::printf("$MFT address: 0x%llX\n", vbr.GetMFTLCN() * CLUSTER_SIZE * SECTOR_SIZE);
+    std::printf("$MFT address: 0x%llX\n",
+                vbr.GetMFTLCN() * CLUSTER_SIZE * SECTOR_SIZE);
 
     // Find start address of $MFTMirr
-    std::printf("$MFTMirr address: 0x%llX\n", vbr.GetMFTMirrLCN() * CLUSTER_SIZE * SECTOR_SIZE);
+    std::printf("$MFTMirr address: 0x%llX\n",
+                vbr.GetMFTMirrLCN() * CLUSTER_SIZE * SECTOR_SIZE);
 }
 
 // work function.
@@ -40,7 +43,7 @@ int work(int fd) {
     unsigned char mbrArr[SECTOR_SIZE + 1];
     if (read(fd, mbrArr, SECTOR_SIZE + 1) < 0) {
         perror("read");
-        std::exit(3);
+        return READ_ERROR;
     }
 
     // Create MBR object
@@ -77,10 +80,12 @@ int work(int fd) {
             NTFSEntries[i].GetStartingSector() * SECTOR_SIZE;
         if (lseek(fd, vbrAddr, SEEK_SET) < 0) {
             perror("lseek");
+            return LSEEK_ERROR;
         }
         unsigned char vbr[SECTOR_SIZE + 1];
         if (read(fd, vbr, SECTOR_SIZE + 1) < 0) {
             perror("read");
+            return READ_ERROR;
         }
         dkt::UString vbrStr(SECTOR_SIZE);
         for (size_t j = 0; j < SECTOR_SIZE; ++j) {
@@ -106,14 +111,14 @@ int main(int argc, char **argv) {
     // Require 2 arguments
     if (argc != 2) {
         std::fprintf(stderr, "Expected 2 arguments, got %d\n", argc);
-        std::exit(1);
+        std::exit(ARGUMENT_EXPECTED);
     }
 
     // Open device
     int fd = open(argv[1], O_RDONLY);
     if (fd < 0) {
         std::perror("open");
-        std::exit(2);
+        std::exit(OPEN_ERROR);
     }
     std::cout << argv[1] << " opened successfully\n\n";
 
@@ -122,4 +127,7 @@ int main(int argc, char **argv) {
 
     // Close device
     close(fd);
+
+    // Exit with work's return code
+    std::exit(workResult);
 }
