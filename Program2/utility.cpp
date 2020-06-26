@@ -146,16 +146,10 @@ void NTFSVBR::SetVBR(const dkt::UString &VBR) {
     // Check VBR for NTFS telltales
     // 0x55AA is already checked in MBR constructor,
     // so check if bytes 3-10 are "NTFS    "
-    if (VBR[3] != 'N'
-     || VBR[4] != 'T'
-     || VBR[5] != 'F'
-     || VBR[6] != 'S'
-     || VBR[7] != ' '
-     || VBR[8] != ' '
-     || VBR[9] != ' '
-     || VBR[10] != ' ') {
-         throw std::invalid_argument("Bytes 3-10 are not equal to \"NTFS    \"");
-     }
+    if (VBR[3] != 'N' || VBR[4] != 'T' || VBR[5] != 'F' || VBR[6] != 'S' ||
+        VBR[7] != ' ' || VBR[8] != ' ' || VBR[9] != ' ' || VBR[10] != ' ') {
+        throw std::invalid_argument("Bytes 3-10 are not equal to \"NTFS    \"");
+    }
 
     // Set VBR
     this->SectorStr = VBR;

@@ -12,7 +12,7 @@ const int PARTITION_TABLE_SIZE = 64;    // partition table size
 const int PARTITION_ENTRY_SIZE = 16;    // partition entry size
 const int NTFS_VBR_MFT_OFFSET = 0x30; // MFT starting sector, starting from VBR
 const int NTFS_VBR_MFTMIRR_OFFSET =
-    0x38; // MFTMirr starting sector, starting from VBR
+    0x38;                   // MFTMirr starting sector, starting from VBR
 const int CLUSTER_SIZE = 8; // cluster size, in sectors
 
 // Class declarations

@@ -24,8 +24,8 @@
 #include <vector>
 
 // Self-defined headers
-#include "utility.hpp"
 #include "Program2.hpp"
+#include "utility.hpp"
 
 void displayMFTProperties(const NTFSVBR &vbr) {
     // Find start address of $MFT
