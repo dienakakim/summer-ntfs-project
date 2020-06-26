@@ -1,0 +1,12 @@
+CC = cc
+CFLAGS = -Wall -Wextra -pedantic-errors
+
+rule link
+    command = $CC $CFLAGS $in -o $out
+
+rule compile
+    command = $CC $CFLAGS -c $in -o $out
+
+build Program1: link Program1.o
+
+build Program1.o: compile Program1.c

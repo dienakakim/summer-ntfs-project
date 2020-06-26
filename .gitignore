@@ -1,7 +1,8 @@
-# Block binaries
+# Allow source files, headers, Markdown files and `build.ninja`s
 /Program*/*
 !Program*/*.c
 !Program*/*.h
 !Program*/*.cpp
 !Program*/*.hpp
 !Program*/*.md
+!Program*/build.ninja

@@ -6,6 +6,10 @@ This is my submission for the given programming assignments for an NTFS file rec
 
 These programs are expected to be compiled and run on a **Linux** system.
 
+## Build system
+
+This project uses the [Ninja build system](https://ninja-build.org), with `build.ninja` files placed in every Program directory.
+
 ### Program1
 
 Assuming the given disk is in MBR (`msdos`) partition format, the program will list all VBRs on the given disk, noting which partitions are formatted in NTFS.
