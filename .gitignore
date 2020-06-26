@@ -1,0 +1,7 @@
+# Block binaries
+/Program*/*
+!Program*/*.c
+!Program*/*.h
+!Program*/*.cpp
+!Program*/*.hpp
+!Program*/*.md
