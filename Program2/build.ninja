@@ -9,6 +9,6 @@ rule compile
 
 build Program2: link Program2.o utility.o
 
-build Program2.o: compile Program2.cpp | utility.hpp
+build Program2.o: compile Program2.cpp | utility.hpp Program2.hpp
 
 build utility.o: compile utility.cpp | utility.hpp
