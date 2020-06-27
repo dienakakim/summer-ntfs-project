@@ -28,7 +28,7 @@ typedef struct {
     bool BootIndicator;      // byte 0: boot flag. 0x80 is bootable, 0x00 if not
     uint64_t StartingSector; // bytes 8-11 little-endian: starting sector of
                              // partition
-    unsigned char PartitionType : 1; // byte 4: partition type
+    unsigned char PartitionType; // byte 4: partition type
 } PartitionEntry;
 
 // Function prototypes
@@ -106,6 +106,13 @@ int work(int fd) {
             buf[j] = mbr[PARTITION_TABLE_OFFSET + PARTITION_ENTRY_SIZE * i + j];
         }
         partitions[i] = newPartitionEntry(buf);
+    }
+
+    // Check if the disk is in GPT format
+    if (partitions[0] && partitions[0]->PartitionType == 0xEE) {
+        // We do not deal with GPT disks. Terminate gracefully
+        printf("This disk is in GPT format, which is unsupported.\n");
+        return 5;
     }
 
     // Print VBRs
