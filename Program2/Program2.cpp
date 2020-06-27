@@ -55,6 +55,12 @@ int work(int fd) {
 
     // Parse partition entries, and see which ones are NTFS
     dkt::EntryVector entries = mbr.ParseEntries();
+    // ...but first, check if the disk is in GPT
+    if (entries.size() && entries[0].GetPartitionType() == 0xEE) {
+        // We do not deal with GPT disks. Terminate the program gracefully
+        std::cout << "This disk is in GPT format, which is unsupported." << '\n';
+        return GPT_FORMATTED;
+    }
     dkt::NTFSEntryVector NTFSEntries;
     NTFSEntries.reserve(4);
     for (size_t i = 0; i < entries.size(); ++i) {
