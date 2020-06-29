@@ -1,0 +1,14 @@
+CXX = c++
+CXXFLAGS = -std=c++11 -Wall -Wextra -pedantic-errors
+
+rule link
+    command = $CXX $CXXFLAGS $in -o $out
+
+rule compile
+    command = $CXX $CXXFLAGS -c $in -o $out
+
+build Program2: link Program2.o utility.o
+
+build Program2.o: compile Program2.cpp | utility.hpp Program2.hpp
+
+build utility.o: compile utility.cpp | utility.hpp
