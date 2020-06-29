@@ -1,5 +1,5 @@
 CXX = c++
-CXXFLAGS = -Wall -Wextra -pedantic-errors
+CXXFLAGS = -std=c++11 -Wall -Wextra -pedantic-errors
 
 rule link
     command = $CXX $CXXFLAGS $in -o $out
